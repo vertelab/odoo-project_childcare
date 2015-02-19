@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+          
+        <!-- Template rendering the external HTML support page -->
+        <template id="fee_calc" name="Fee Calculation">
+        
+ <t t-call="website.layout">
+    
+     <script language="JavaScript">
+        	var iMenuEndPositionX = 780;
+
+			var iMenuBgHeight = 90;
+
+			var iMenuNotAllowed = "Du har använt fel inloggningsmetod för att komma åt funktionen! Menypunkter och länkar markerade med (X) kräver annan inloggningsmetod. Vid oklarheter kontakta systemansvarig.";
+
+			var iMenuElementHeight = 16;
+			var iMenuElementPadding = 0;			
+
+			var sSubMenuBgColor = "#666666";
+			var sSubMenuBgColorHover = "#FFFFFF";
+
+			var sMenuElementHelp = "";
+
+			var a_sMenuElement = new Array("Kontakta oss");
+
+			var a_sMenuLink = new Array("Default.asp?page=auth/common/about");
+
+			var a_iMenuVisible = new Array("1");
+
+			a_sSubMenu_1 = new Array();
+		a_sSubMenuLink_1 = new Array();
+		
+
+			createMenu('style/current');
+		    </script>
+    
+    <section class="para_large mt0 oe_blue" style="">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mt0 mb0">
+               <table id="page" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="http://www.skafferietvisby.se/sites/default/files/skafferietvisby_se/SV_menu_background.gif"/></td>
+</tr>
+<tr>
+<td class="clsNavigation"><a href="http://www.vertel.se">Startsida</a>Berakna barnomsorgsavgift</td>
+</tr>
+<tr>
+<td class="clsMainContent">
+<table id="content" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="style/current/images/panel_header-left.gif"/></td><td class="clsPanelHeader" width="">Berakna barnomsorgsavgift</td><td><img src="style/current/images/panel_header-right.gif"/></td>
+</tr>
+<tr>
+<td background="style/current/images/panel_middle-left.gif"></td><td class="clsPanelContent">
+<table xmlns:meta="http:/www.istsoft.se/meta" class="clsText" cellspacing="0" cellpadding="2" border="0" width="100%">
+<form onSubmit="calcCharge(); return false;">
+<tr>
+<td>Har kan du rakna ut din barnomsorgsavgift. Hogsta avgiftsgrundande inkomst ar 42000 kr.<br/>Det yngsta barnomsorgsplacerade barnet raknas som barn 1.<br/>Enligt maxtaxan ar endast tre barns placeringar per hushall avgiftsbelagda.<br/>Beraknknad avgift ar endast preliminar.<br/>
+</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Ange familjens totala månadsinkomst (fore skatt)<br/>
+<input onchange="calcCharge()" class="clsFormObject" size="8" name="income"/>SEK</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>
+<table class="clsText" cellspacing="0" cellpadding="8" border="0" width="100%">
+<tr class="clsTextBold">
+<td>Barn</td><td>Typ av barnomsorg</td><td>Vistelsetid</td><td>Avgift per barn</td>
+</tr>
+<tr>
+ <td align="center">1</td><td><select onchange="calcCharge()" class="clsFormObject" name="typeOfChildCare1"><option value="0">Valj</option><option value="0">--------------------</option><option value="1">Forskola/Familjedaghem 1-2 ar</option><option value="2">Allman forskola/Familjedaghem 3-5 ar</option><option value="3">Fritidshem 6-9 ar</option><option value="4">Oppen fritidsverksamhet 10-12 ar</option></select></td><td><select onchange="calcCharge()" class="clsFormObject" name="timeOfResidence1"><option value="0">Valj</option><option value="0">--------------------</option></select></td><td><span id="sum1">0</span>SEK</td>
+</tr>
+<tr class="clsEvenRow">
+  <td align="center">2</td><td><select onchange="calcCharge()" class="clsFormObject" name="typeOfChildCare2"><option value="0">Valj</option><option value="0">--------------------</option><option value="1">Forskola/Familjedaghem 1-2 ar</option><option value="2">Allman forskola/Familjedaghem 3-5 ar</option><option value="3">Fritidshem 6-9 ar</option><option value="4">Oppen fritidsverksamhet 10-12 ar</option></select></td><td><select onchange="calcCharge()" class="clsFormObject" name="timeOfResidence2"><option value="0">Valj</option><option value="0">--------------------</option></select></td><td><span id="sum2">0</span>SEK</td>
+</tr>
+<tr>
+  <td align="center">3</td><td><select onchange="calcCharge()" class="clsFormObject" name="typeOfChildCare3"><option value="0">Valj</option><option value="0">--------------------</option><option value="1">Forskola/Familjedaghem 1-2 ar</option><option value="2">Allman forskola/Familjedaghem 3-5 ar</option><option value="3">Fritidshem 6-9 ar</option><option value="4">Oppen fritidsverksamhet 10-12 ar</option></select></td><td><select onchange="calcCharge()" class="clsFormObject" name="timeOfResidence3"><option value="0">Valj</option><option value="0">--------------------</option></select></td><td><span id="sum3">0</span>SEK</td>
+</tr>
+<tr>
+<td colspan="4"><span class="clsTextBold">Berakna manadskostnad:</span><span id="totalsum">0</span>SEK</td>
+</tr>
+</table>
+</td>
+</tr>
+</form>
+</table>
+</td><td background="style/current/images/panel_middle-right.gif"></td>
+</tr>
+<tr>
+<td><img src="style/current/images/panel_bottom-left.gif"/></td><td></td><td><img src="style/current/images/panel_bottom-right.gif"/></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<div class="clsLoading" id="loading">Var god koka en kopp kaffe medan sidan laddas...</div> 
+            </div>
+        </div>
+        </div>
+    </section>        
+    
+   
+
+</t>        
+        </template>
+        
+
+    </data>
+</openerp>
