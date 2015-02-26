@@ -39,4 +39,104 @@ class website_childcare(http.Controller):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         return request.render('project_childcare.fee_calc', {})
         
-        
+class res_users(models.Model):
+    _inherit = ['res.users']
+    
+    childcare_income = field.Integer()
+	def _income_max(self):
+		if (self.childcare_income > self.company_id.childcare_maxincome):
+			return self.company_id.childcare_maxincome
+		if (self.childcare_income < self.company_id.childcare_mincharge):
+			return 0
+		return self.childcare_income
+    childcare_income_max = field.Integer(compute="_income_max")
+    childcare_type1 = field.One2many(comodel_name="childcare.type")
+    childcare_time1 = field.One2many(comodel_name="childcare.time_of_residence")
+	def _monthly_type1(self):
+		sum = 0
+		if self.childcare_type1.id == 1: # Förskola/familjedaghem 1-3 år
+			sum = round(0.03 * self.childcare_income)
+		elif self.childcare_type1.id == 2: # Allmän förskola 4-5 år
+			if self.childcare_time1.id == 1: # Över 15 tim
+				sum round((0.03 * self.childcare_income)* 0.7)
+			elif self.childcare_time1.id == 2: # Upp till 15 tim
+				sum round((0.03 * self.childcare_income)* 0.17)
+		elif self.childcare_type1.id == 3:  # Frididshem 6 -9 år
+			sum round(0.02 * self.childcare_income)
+		elif self.childcare_type1.id == 4: # Öppen fritidsverksamehet 10 -12 år
+			sum round(0.01 * self.childcare_income)
+		if sum < 50:
+			sum = 0
+		return sum
+    childcare_sum1 = field.Integer(compute="_monthly_type1")
+
+	def _monthly_type2(self):
+		sum = 0
+		if self.childcare_type2.id == 1: # Förskola/familjedaghem 1-3 år
+			sum = round(0.02 * self.childcare_income)
+		elif self.childcare_type2.id == 2: # Allmän förskola 4-5 år
+			if self.childcare_time2.id == 1: # Över 15 tim
+				sum round((0.02 * self.childcare_income)* 0.7)
+			elif self.childcare_time2.id == 2: # Upp till 15 tim
+				sum round((0.02 * self.childcare_income)* 0.17)
+		elif self.childcare_type2.id == 3:  # Frididshem 6 -9 år
+			sum round(0.01 * self.childcare_income)
+		elif self.childcare_type2.id == 4: # Öppen fritidsverksamehet 10 -12 år
+			sum round(0.005 * self.childcare_income)
+		if sum < 50:
+			sum = 0
+		return sum	
+    childcare_sum2 = field.Integer(compute="_monthly_type2")
+    childcare_time1 = field.One2many(comodel_name="childcare.type")
+    childcare_type2 = field.One2many(comodel_name="childcare.time_of_residence")
+
+	def _monthly_type3(self):
+		sum = 0
+		if self.childcare_type3.id == 1: # Förskola/familjedaghem 1-3 år
+			sum = round(0.01 * self.childcare_income)
+		elif self.childcare_type3.id == 2: # Allmän förskola 4-5 år
+			if self.childcare_time3.id == 1: # Över 15 tim
+				sum round((0.01 * self.childcare_income)* 0.7)
+			elif self.childcare_time3.id == 2: # Upp till 15 tim
+				sum round((0.01 * self.childcare_income)* 0.17)
+		elif self.childcare_type3.id == 3:  # Frididshem 6 -9 år
+			sum round(0.01 * self.childcare_income)
+		elif self.childcare_type3.id == 4: # Öppen fritidsverksamehet 10 -12 år
+			sum round(0.005 * self.childcare_income)
+		if sum < 50:
+			sum = 0
+		return sum			
+	childcare_sum3 = field.Integer(compute="_monthly_type3")
+    childcare_type3 = field.One2many(comodel_name="childcare.type")
+    childcare_time3 = field.One2many(comodel_name="childcare.time_of_residence")
+
+	def _monthly(self):
+		return self.childcare_sum1 + self.childcare_sum2 + self.childcare_sum3
+    childcare_monthly = field.Integer(compute="_monthly")
+
+    
+class childcare_type(models.Model):
+	_name = "childcare.type"
+    _description = "Childcare Types"
+
+	name = fields.Char()
+	
+class childcare_tor(models.Model):
+	_name = "childcare.time_of_residence"
+    _description = "Childcare Time of Residence"
+
+	name = fields.Char()
+	
+	
+class res_company(models.Model):
+	_inherit = ['res.company']
+	
+	childcare_maxincome = fields.Integer(default=42000)
+	childcare_mincharge = fields.Integer(default=0)
+
+	
+
+	else
+		document.all['sum3'].innerHTML = 0;
+//Totalsumma
+	document.all['totalsum'].innerHTML = Math.round(iSum1 + iSum2 + iSum3);
